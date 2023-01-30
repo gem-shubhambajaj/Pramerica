@@ -15,6 +15,7 @@ Feature: Pramerica App
     When Login in the application with "<username>" and "<password>"
     Then Add details in Application form of "<gender>" and "<sameAsProposer>"
     Then Choose Product
+    Then Plan the policy
     Examples:
       | username | password | gender | sameAsProposer |
       | 70028763 | 420420   | female | true           |
