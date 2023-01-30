@@ -1,9 +1,11 @@
 package com.gemini.generic.locator;
 
 import io.appium.java_client.AppiumBy;
+import jdk.nashorn.internal.ir.LexicalContext;
 import org.openqa.selenium.By;
 
 public class Locator {
+    public static String btn_generic = "//android.widget.Button[@text='<button>']";
     public static By LoginPageHeading = AppiumBy.xpath("//android.widget.Image/following-sibling::android.widget.TextView");
     public static By usernameInput = AppiumBy.xpath("//android.view.View[2]//android.widget.EditText");
     public static By passInput = AppiumBy.xpath("//android.view.View[3]//android.widget.EditText");
@@ -37,8 +39,8 @@ public class Locator {
     public static By ulip_products = AppiumBy.xpath("//android.widget.Button[contains(@text,'ULIP')]");
     public static By ulip_FirstProduct = AppiumBy.xpath("(//android.widget.Image[@text='pic'])[1]/..");
     public static By afterProdSelect = AppiumBy.xpath("//android.widget.Button[contains(@text,'Plan Your Policy')]");
-
-
+    public static By premiumToPay = AppiumBy.xpath("//android.widget.TextView[@text='₹']/..//android.widget.EditText");
+    public static String policyTerm = "//android.widget.Button[@text='<years>']";
 
 
 }
