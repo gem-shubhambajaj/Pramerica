@@ -8,15 +8,9 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import org.junit.Assert;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.interactions.Actions;
 
 public class StepDef {
     AppiumDriver driver = MobileDriverManager.getAppiumDriver();
@@ -47,19 +41,6 @@ public class StepDef {
             return false;
         }
     }
-
-    public void handleLoadingDialog(By loadingDialogBy, int timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        try {
-            // Wait for loading dialog to appear
-            wait.until(ExpectedConditions.visibilityOfElementLocated(loadingDialogBy));
-            // Wait for loading dialog to disappear
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingDialogBy));
-        } catch (TimeoutException e) {
-            System.out.println("Loading dialog not found or took longer than " + timeoutInSeconds + " seconds to disappear");
-        }
-    }
-
 
     @Then("Login in the application with {string} and {string}")
     public void loginInTheApplicationWithAnd(String username, String pass) {
@@ -114,21 +95,14 @@ public class StepDef {
         if (isElementDisplayed(Locator.btn_chooseYear))
             MobileAction.click(Locator.btn_chooseYear);
 
-//        while (true) {
-//            String yearRange = MobileAction.getElementText(Locator.year_range).split("~")[0].trim();
-//            if (Integer.parseInt(yearRange) > Integer.parseInt(year))
-//                MobileAction.click(Locator.previousDate);
-//            else break;
-//
-//        }
         while (true) {
-            if (isElementDisplayed(AppiumBy.xpath(Locator.year.replace("<year>", year)))) {
-                MobileAction.click(AppiumBy.xpath(Locator.year.replace("<year>", year)));
-                break;
-            } else
+            String yearRange = MobileAction.getElementText(Locator.year_range).split("~")[0].trim();
+            if (Integer.parseInt(yearRange) > Integer.parseInt(year))
                 MobileAction.click(Locator.previousDate);
+            else break;
+
         }
-//        MobileAction.click(AppiumBy.xpath(Locator.year.replace("<year>", year)));
+        MobileAction.click(AppiumBy.xpath(Locator.year.replace("<year>", year)));
         System.out.println(Locator.month.replace("<month>", month).replace("<year>", year));
         System.out.println(Locator.day.replace("<month>", month).replace("<year>", year).replace("<day>", day));
         MobileAction.click(AppiumBy.xpath(Locator.month.replace("<month>", month).replace("<year>", year)));
@@ -136,7 +110,7 @@ public class StepDef {
         if (sameAsProposer.equalsIgnoreCase("false"))
             MobileAction.click(Locator.eKycCheckBox);
         MobileAction.click(Locator.btn_next);
-        handleLoadingDialog(Locator.loadingBox,10);
+
 
     }
 
@@ -163,19 +137,5 @@ public class StepDef {
             e.printStackTrace();
         }
 
-    }
-
-    @Then("Plan the policy")
-    public void planThePolicy() {
-        MobileAction.scrollToElement("Premium",false);
-        MobileAction.typeText(Locator.premiumToPay,"653000");
-        ((AndroidDriver) driver).hideKeyboard();
-        MobileAction.scrollToElement("Policy Term",false);
-        //Choose Policy Term -> [10,15,20,25]
-        MobileAction.click(AppiumBy.xpath(Locator.policyTerm.replace("<years>","20")));
-        MobileAction.scrollToElement("Next",false);
-        Assert.assertTrue(isElementDisplayed(AppiumBy.xpath(Locator.btn_generic.replace("<button>","Next"))));
-        MobileAction.click(AppiumBy.xpath(Locator.btn_generic.replace("<button>","Next")));
-        MobileAction.waitSec(10);
     }
 }
