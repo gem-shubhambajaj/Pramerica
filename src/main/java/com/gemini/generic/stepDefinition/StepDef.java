@@ -177,6 +177,6 @@ public class StepDef {
         Assert.assertTrue(isElementDisplayed(AppiumBy.xpath(Locator.btn_generic.replace("<button>","Next"))));
         MobileAction.click(AppiumBy.xpath(Locator.btn_generic.replace("<button>","Next")));
         MobileAction.waitSec(10);
-        //
+
     }
 }
