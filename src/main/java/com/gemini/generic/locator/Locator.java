@@ -5,7 +5,7 @@ import jdk.nashorn.internal.ir.LexicalContext;
 import org.openqa.selenium.By;
 
 public class Locator {
-    public static String btn_generic = "//android.widget.Button[@text='<button>']";
+    public static String btn_generic = "//android.widget.Button[@text='<button>']";//
     public static By LoginPageHeading = AppiumBy.xpath("//android.widget.Image/following-sibling::android.widget.TextView");
     public static By usernameInput = AppiumBy.xpath("//android.view.View[2]//android.widget.EditText");
     public static By passInput = AppiumBy.xpath("//android.view.View[3]//android.widget.EditText");
